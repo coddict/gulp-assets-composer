@@ -1,0 +1,32 @@
+{
+  "name": "gulp-assets-composer",
+  "version": "0.1.0",
+  "main": "index.js",
+  "author": "Coddict",
+  "license": "MIT",
+  "dependencies": {
+    "glob": "^7.1.2",
+    "gulp": "^3.9.1",
+    "gulp-buster": "^1.1.0",
+    "gulp-clean-css": "^3.4.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.0",
+    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8",
+    "gulp-watch": "^4.3.11",
+    "lodash.flatten": "^4.4.0"
+  },
+  "devDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gulp", "composer", "assets", "gulpplugin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Coddict/gulp-assets-composer.git"
+  }
+}
