@@ -28,7 +28,7 @@ function getConfigFromVendors(rootDir) {
 
 function getPackageConfigs(rootDir, pkg, isVendor) {
     if (pkg.extra) {
-        if (pkg.extra['gulp-asset-manager']) {
+        if (pkg.extra['gulp-assets-composer']) {
             function absPath(configPath) {
                 if (isVendor) {
                     return path.join(rootDir, 'vendor', pkg.name, configPath);
@@ -37,7 +37,7 @@ function getPackageConfigs(rootDir, pkg, isVendor) {
                 }
             }
 
-            return pkg.extra['gulp-asset-manager'].configs.map(absPath);
+            return pkg.extra['gulp-assets-composer'].configs.map(absPath);
         }
     }
     return [];
