@@ -1,16 +1,16 @@
-var path = require('path');
-var sass = require('gulp-sass');
-var cleanCSS = require('gulp-clean-css');
-var concat = require('gulp-concat');
-var sourcemaps = require('gulp-sourcemaps');
-var uglify = require('gulp-uglify');
-var gutil = require('gulp-util');
-var bust = require('gulp-buster');
+let path = require('path');
+let sass = require('gulp-sass');
+let cleanCSS = require('gulp-clean-css');
+let concat = require('gulp-concat');
+let sourcemaps = require('gulp-sourcemaps');
+let uglify = require('gulp-uglify');
+let gutil = require('gulp-util');
+let bust = require('gulp-buster');
 
 module.exports = {
     loadHandlerFromConfig(config) {
-        var assetHandler;
-        var loadedTasks = [];
+        let assetHandler;
+        let loadedTasks = [];
 
         return assetHandler = {
             loadTasks(gulp, options) {
@@ -31,13 +31,13 @@ module.exports = {
 
 function loadStyleSheetsFromConfig(gulp, config, options) {
     return Object.keys(config.stylesheets).map((name) => {
-            var data = config.stylesheets[name];
-            var srcPrefix = getConfig(config, 'src.prefix');
-            var destPrefix = getConfig(config, 'dest.prefix');
-            var sassConfig = getConfig(config, 'sass', {});
-            var buildDir = path.join(destPrefix, 'css/');
+            let data = config.stylesheets[name];
+            let srcPrefix = getConfig(config, 'src.prefix');
+            let destPrefix = getConfig(config, 'dest.prefix');
+            let sassConfig = getConfig(config, 'sass', {});
+            let buildDir = path.join(destPrefix, 'css/');
 
-            var src = data.src.map(
+            let src = data.src.map(
                 (src) => path.join(srcPrefix, src)
             );
 
@@ -65,12 +65,12 @@ function loadStyleSheetsFromConfig(gulp, config, options) {
 
 function loadScriptsFromConfig(gulp, config, options) {
     return Object.keys(config.scripts).map((name) => {
-        var script = config.scripts[name];
-        var srcPrefix = getConfig(config, 'src.prefix');
-        var destPrefix = getConfig(config, 'dest.prefix');
-        var buildDir = path.join(destPrefix, 'js/');
+        let script = config.scripts[name];
+        let srcPrefix = getConfig(config, 'src.prefix');
+        let destPrefix = getConfig(config, 'dest.prefix');
+        let buildDir = path.join(destPrefix, 'js/');
 
-        var src = script.src.map(
+        let src = script.src.map(
             (src) => path.join(srcPrefix, src)
         );
 
@@ -95,8 +95,8 @@ function loadScriptsFromConfig(gulp, config, options) {
 }
 
 function getConfig(config, keys, defaultVal = '') {
-    var obj = config.config;
-    var key;
+    let obj = config.config;
+    let key;
 
     keys = keys.split('.');
     while ((key = keys.shift()) && obj) {

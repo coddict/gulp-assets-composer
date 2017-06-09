@@ -1,25 +1,25 @@
-var flatten = require('lodash.flatten');
-var fs = require("fs");
-var path = require('path');
-var glob = require("glob");
+let flatten = require('lodash.flatten');
+let fs = require("fs");
+let path = require('path');
+let glob = require("glob");
 
 module.exports = {
     locate(rootDir) {
-        var configsPath = getConfigFromProject(rootDir).concat(getConfigFromVendors(rootDir));
+        let configsPath = getConfigFromProject(rootDir).concat(getConfigFromVendors(rootDir));
 
         return flatten(configsPath.map(path => glob.sync(path)));
     }
 };
 
 function getConfigFromProject(rootDir) {
-    var pkg = require(rootDir + '/composer.json');
+    let pkg = require(rootDir + '/composer.json');
 
     return getPackageConfigs(rootDir, pkg);
 }
 
 function getConfigFromVendors(rootDir) {
-    var composerLock = fs.readFileSync(rootDir + "/composer.lock");
-    var pkgs = JSON.parse(composerLock).packages;
+    let composerLock = fs.readFileSync(rootDir + "/composer.lock");
+    let pkgs = JSON.parse(composerLock).packages;
 
     return flatten(pkgs.map(
         (pkg) => getPackageConfigs(rootDir, pkg, true)
