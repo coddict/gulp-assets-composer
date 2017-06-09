@@ -1,11 +1,15 @@
 let path = require('path');
 let flatten = require('lodash.flatten');
+let gutil = require('gulp-util');
 
 const configsLocator = require('./configs-locator');
 const assetsManager = require('./assets-manager');
 
 module.exports = {
     init(gulp, options) {
+
+        console.log("Currently running in " + gutil.env.env + " environment");
+
         let assetHandlers = loadAssetHandlers(options.rootDir);
 
         assetHandlers.forEach((assetHandler) => {
