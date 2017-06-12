@@ -6,6 +6,8 @@ let sourcemaps = require('gulp-sourcemaps');
 let uglify = require('gulp-uglify');
 let gutil = require('gulp-util');
 let bust = require('gulp-buster');
+const filter = require('gulp-filter');
+
 
 module.exports = {
     loadHandlerFromConfig(config) {
@@ -41,12 +43,17 @@ function loadStyleSheetsFromConfig(gulp, config, options) {
                 (src) => path.join(srcPrefix, src)
             );
 
+
+
             gulp.task(name, () => {
+                const minFilter = filter(['**','**/*.min.css'], {restore: true});
                 gulp.src(src)
                     .pipe(isProd() ? gutil.noop() : sourcemaps.init())
+                    .pipe(minFilter)
                     .pipe(sass(sassConfig).on('error', sass.logError))
-                    .pipe(concat(data.dest))
                     .pipe(isProd() ? cleanCSS() : gutil.noop())
+                    .pipe(minFilter.restore)
+                    .pipe(concat(data.dest))
                     .pipe(isProd() ? gutil.noop() : sourcemaps.write())
                     .pipe(gulp.dest(buildDir))
                     .pipe(bust(options.busterConfig))
@@ -76,10 +83,13 @@ function loadScriptsFromConfig(gulp, config, options) {
 
 
         gulp.task(name, () => {
-            return gulp.src(src)
+            const minFilter = filter(['**', '**/*.min.js'], {restore: true});
+            gulp.src(src)
+                .pipe(minFilter)
                 .pipe(isProd() ? gutil.noop() : sourcemaps.init())
-                .pipe(concat(script.dest))
                 .pipe(isProd() ? uglify() : gutil.noop())
+                .pipe(minFilter.restore)
+                .pipe(concat(script.dest))
                 .pipe(isProd() ? gutil.noop() : sourcemaps.write())
                 .pipe(gulp.dest(buildDir))
                 .pipe(bust(options.busterConfig))
