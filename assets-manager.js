@@ -43,11 +43,11 @@ function loadStyleSheetsFromConfig(gulp, config, options) {
 
             gulp.task(name, () => {
                 gulp.src(src)
-                    .pipe(sourcemaps.init())
+                    .pipe(isProd() ? gutil.noop() : sourcemaps.init())
                     .pipe(sass(sassConfig).on('error', sass.logError))
                     .pipe(concat(data.dest))
                     .pipe(isProd() ? cleanCSS() : gutil.noop())
-                    .pipe(sourcemaps.write())
+                    .pipe(isProd() ? gutil.noop() : sourcemaps.write())
                     .pipe(gulp.dest(buildDir))
                     .pipe(bust(options.busterConfig))
                     .pipe(gulp.dest(options.busterDir));
@@ -77,10 +77,10 @@ function loadScriptsFromConfig(gulp, config, options) {
 
         gulp.task(name, () => {
             return gulp.src(src)
-                .pipe(sourcemaps.init())
+                .pipe(isProd() ? gutil.noop() : sourcemaps.init())
                 .pipe(concat(script.dest))
                 .pipe(isProd() ? uglify() : gutil.noop())
-                .pipe(sourcemaps.write())
+                .pipe(isProd() ? gutil.noop() : sourcemaps.write())
                 .pipe(gulp.dest(buildDir))
                 .pipe(bust(options.busterConfig))
                 .pipe(gulp.dest(options.busterDir));
