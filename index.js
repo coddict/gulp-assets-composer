@@ -8,20 +8,28 @@ const assetsManager = require('./assets-manager');
 module.exports = {
     init(gulp, options) {
 
-        console.log("Currently running in " + gutil.env.env + " environment");
-
         let assetHandlers = loadAssetHandlers(options.rootDir);
-
         assetHandlers.forEach((assetHandler) => {
             assetHandler.loadTasks(gulp, options);
         });
 
         registerAssetsTasksInGulp(gulp, assetHandlers);
+
+        let environment = gutil.env.env;
+        if(!environment){
+            environment = 'dev';
+        }
+        console.log("\x1b[34m Currently running in a","\x1b[37m" + environment + "\x1b[34m environment");
     }
 };
 
 function loadAssetHandlers(rootDir) {
     let configsPath = configsLocator.locate(rootDir);
+
+    console.log("\x1b[34m","Loading Configuration files...");
+    configsPath.map(function(configPath) {
+        console.log("\x1b[32m",configPath);
+    });
 
     return configsPath.map((configPath) => {
         let config = require(configPath);
