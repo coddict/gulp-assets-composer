@@ -1,0 +1,60 @@
+{
+  "config": {
+    "src": {
+      "prefix": "bundles"
+    },
+    "dest": {
+      "prefix": "assets/testbundle"
+    },
+    "sass": {
+      "includePaths": [
+        "src/"
+      ]
+    }
+  },
+  "stylesheets": {
+    "test-style-1": {
+      "src": [
+        "testbundle/css/test-1.css",
+        "testbundle/css/test-2.css",
+        "testbundle/css/test-3.css",
+        "testbundle/css/test-4.css",
+        "testbundle/scss/test-1.scss",
+        "testbundle/scss/test-2.scss",
+        "testbundle/scss/test-3.scss"
+      ],
+      "dest": "test-style-1.css"
+    },
+    "test-style-2": {
+      "src": [
+        "testbundle/css/test-1.css",
+        "testbundle/css/test-3.css",
+        "testbundle/css/test-4.css",
+        "testbundle/scss/test-1.scss",
+        "testbundle/scss/test-2.scss",
+        "testbundle/scss/test-3.scss"
+      ],
+      "dest": "test-style-2.css"
+    },
+    "test-style-3": {
+      "src": [
+        "testbundle/css/test-2.css",
+        "testbundle/css/test-3.css",
+        "testbundle/css/test-4.css",
+        "testbundle/scss/test-1.scss",
+        "testbundle/scss/test-2.scss",
+        "testbundle/scss/test-3.scss"
+      ],
+      "dest": "test-style-3.css"
+    }
+  },
+  "scripts": {
+    "test-scripts-1": {
+      "src": [
+        "testbundle/js/test-1.js",
+        "testbundle/js/test-2.js"
+      ],
+      "dest": "test-scripts-1.js"
+    }
+  }
+}

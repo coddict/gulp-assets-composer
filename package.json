@@ -5,6 +5,7 @@
   "author": "Coddict",
   "license": "MIT",
   "dependencies": {
+    "dev": "^0.1.3",
     "glob": "^7.1.2",
     "gulp": "^3.9.1",
     "gulp-buster": "^1.1.0",
@@ -19,6 +20,7 @@
     "lodash.flatten": "^4.4.0"
   },
   "devDependencies": {
+    "fs-extra": "^3.0.1"
   },
   "readme": "ERROR: No README data found!",
   "scripts": {
