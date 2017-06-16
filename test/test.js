@@ -13,9 +13,29 @@ describe('Compile Stylesheets', () => {
 
         gulpCmd.on('close', () => {
             // do your assertions;
+            let jsPath = path.join(__dirname, '../.tmp/test-basic/assets/testbundle/js');
+            let cssPath = path.join(__dirname, '../.tmp/test-basic/assets/testbundle/css');
+            let busterPath = path.join(__dirname, '../.tmp/test-basic/assets/testbundle/busters.json');
+            assert.ok(isExists(cssPath));
+            assert.ok(isExists(jsPath));
+            assert.ok(isExists(busterPath));
+            assert.equal(countFiles(cssPath), 3);
+            assert.equal(countFiles(jsPath), 1);
             done();
         });
-        // 3. Make sure .tmp/test-basic/assets is as we expect it to be (content of files & file list)
+
+
     });
 });
 
+
+function isExists(path) {
+    if (fs.existsSync(path)) {
+        return true;
+    }
+}
+
+function countFiles(path) {
+   let dirFiles =  fs.readdirSync(path);
+   return dirFiles.length;
+}
