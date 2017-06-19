@@ -18,7 +18,7 @@
         "testbundle/css/test-1.css",
         "testbundle/css/test-2.css",
         "testbundle/css/test-3.css",
-        "testbundle/css/test-4.css",
+        "testbundle/css/test-4.min.css",
         "testbundle/scss/test-1.scss",
         "testbundle/scss/test-2.scss",
         "testbundle/scss/test-3.scss"
@@ -29,10 +29,7 @@
       "src": [
         "testbundle/css/test-1.css",
         "testbundle/css/test-3.css",
-        "testbundle/css/test-4.css",
-        "testbundle/scss/test-1.scss",
-        "testbundle/scss/test-2.scss",
-        "testbundle/scss/test-3.scss"
+        "testbundle/css/test-4.min.css"
       ],
       "dest": "test-style-2.css"
     },
@@ -40,7 +37,6 @@
       "src": [
         "testbundle/css/test-2.css",
         "testbundle/css/test-3.css",
-        "testbundle/css/test-4.css",
         "testbundle/scss/test-1.scss",
         "testbundle/scss/test-2.scss",
         "testbundle/scss/test-3.scss"

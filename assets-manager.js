@@ -44,9 +44,8 @@ function loadStyleSheetsFromConfig(gulp, config, options) {
             );
 
 
-
             gulp.task(name, () => {
-                const minFilter = filter(['**','**/*.min.css'], {restore: true});
+                const minFilter = filter(['**', '*', '!**/*.min.css', '!*.min.css'], {restore: true});
                 gulp.src(src)
                     .pipe(isProd() ? gutil.noop() : sourcemaps.init())
                     .pipe(minFilter)
@@ -58,7 +57,6 @@ function loadStyleSheetsFromConfig(gulp, config, options) {
                     .pipe(gulp.dest(buildDir))
                     .pipe(bust(options.busterConfig))
                     .pipe(gulp.dest(options.busterDir));
-
             });
 
             gulp.task('watch:' + name, () => {
@@ -83,7 +81,7 @@ function loadScriptsFromConfig(gulp, config, options) {
 
 
         gulp.task(name, () => {
-            const minFilter = filter(['**', '**/*.min.js'], {restore: true});
+            const minFilter = filter(['**', '*', '!**/*.min.js', '!*.min.js'], {restore: true});
             gulp.src(src)
                 .pipe(minFilter)
                 .pipe(isProd() ? gutil.noop() : sourcemaps.init())
