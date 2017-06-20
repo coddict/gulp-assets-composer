@@ -1,0 +1,3 @@
+alert("test");
+alert("test");
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRlc3QtMS5qcyIsInRlc3QtMi5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtBQ0FBIiwiZmlsZSI6InRlc3Qtc2NyaXB0cy0xLmpzIiwic291cmNlc0NvbnRlbnQiOlsiYWxlcnQoXCJ0ZXN0XCIpOyIsImFsZXJ0KFwidGVzdFwiKTsiXX0=
