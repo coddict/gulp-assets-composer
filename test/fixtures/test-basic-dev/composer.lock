@@ -1,0 +1,14 @@
+{
+  "packages": [
+    {
+      "name": "package",
+      "extra": {
+        "gulp-assets-composer": {
+          "configs": [
+            "config.json"
+          ]
+        }
+      }
+    }
+  ]
+}

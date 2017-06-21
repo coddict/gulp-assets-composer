@@ -1,0 +1,9 @@
+{
+  "extra": {
+    "gulp-assets-composer": {
+      "configs": [
+        "config.json"
+      ]
+    }
+  }
+}
