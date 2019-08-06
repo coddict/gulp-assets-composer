@@ -44,9 +44,9 @@ function loadStyleSheetsFromConfig(gulp, config, options) {
             );
 
 
-            gulp.task(name, () => {
+            gulp.task(name, done => {
                 const minFilter = filter(['**', '*', '!**/*.min.css', '!*.min.css'], {restore: true});
-                gulp.src(src)
+                gulp.src(src, {allowEmpty: true})
                     .pipe(isProd() ? gutil.noop() : sourcemaps.init())
                     .pipe(minFilter)
                     .pipe(sass(sassConfig).on('error', sass.logError))
@@ -56,11 +56,12 @@ function loadStyleSheetsFromConfig(gulp, config, options) {
                     .pipe(isProd() ? gutil.noop() : sourcemaps.write())
                     .pipe(gulp.dest(buildDir))
                     .pipe(bust(options.busterConfig))
-                    .pipe(gulp.dest(options.busterDir));
+                    .pipe(gulp.dest(options.busterDir))
+                    .on('end', done);
             });
 
             gulp.task('watch:' + name, () => {
-                gulp.watch(src, [name]);
+                gulp.watch(src, gulp.series(name));
             });
 
             return name;
@@ -80,9 +81,9 @@ function loadScriptsFromConfig(gulp, config, options) {
         );
 
 
-        gulp.task(name, () => {
+        gulp.task(name, done => {
             const minFilter = filter(['**', '*', '!**/*.min.js', '!*.min.js'], {restore: true});
-            gulp.src(src)
+            gulp.src(src, {allowEmpty: true})
                 .pipe(minFilter)
                 .pipe(isProd() ? gutil.noop() : sourcemaps.init())
                 .pipe(isProd() ? uglify() : gutil.noop())
@@ -91,11 +92,12 @@ function loadScriptsFromConfig(gulp, config, options) {
                 .pipe(isProd() ? gutil.noop() : sourcemaps.write())
                 .pipe(gulp.dest(buildDir))
                 .pipe(bust(options.busterConfig))
-                .pipe(gulp.dest(options.busterDir));
+                .pipe(gulp.dest(options.busterDir))
+                .on('end', done);
         });
 
         gulp.task('watch:' + name, () => {
-            gulp.watch(src, [name]);
+            gulp.watch(src, gulp.series(name));
         });
 
         return name;

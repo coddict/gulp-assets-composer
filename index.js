@@ -16,19 +16,19 @@ module.exports = {
         registerAssetsTasksInGulp(gulp, assetHandlers);
 
         let environment = gutil.env.env;
-        if(!environment){
+        if (!environment) {
             environment = 'dev';
         }
-        console.log("\x1b[34m Currently running in a","\x1b[37m" + environment + "\x1b[34m environment");
+        console.log("\x1b[34m Currently running in a", "\x1b[37m" + environment + "\x1b[34m environment");
     }
 };
 
 function loadAssetHandlers(rootDir) {
     let configsPath = configsLocator.locate(rootDir);
 
-    console.log("\x1b[34m","Loading Configuration files...");
-    configsPath.map(function(configPath) {
-        console.log("\x1b[32m",configPath);
+    console.log("\x1b[34m", "Loading Configuration files...");
+    configsPath.map(function (configPath) {
+        console.log("\x1b[32m", configPath);
     });
 
     return configsPath.map((configPath) => {
@@ -43,9 +43,8 @@ function registerAssetsTasksInGulp(gulp, assetHandlers) {
         (assetHandler) => assetHandler.getLoadedTasks()
     ));
 
-    gulp.task('default', allTasks);
-
-    gulp.task('watch', allTasks.map(
+    gulp.task('default', gulp.parallel(allTasks));
+    gulp.task('watch', gulp.parallel(allTasks.map(
         (task) => 'watch:' + task
-    ));
+    )));
 }
