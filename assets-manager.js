@@ -61,7 +61,7 @@ function loadStyleSheetsFromConfig(gulp, config, options) {
             });
 
             gulp.task('watch:' + name, () => {
-                gulp.watch(src, gulp.series(name));
+                gulp.watch(src, options.watchConfig, gulp.series(name));
             });
 
             return name;
@@ -97,7 +97,7 @@ function loadScriptsFromConfig(gulp, config, options) {
         });
 
         gulp.task('watch:' + name, () => {
-            gulp.watch(src, gulp.series(name));
+            gulp.watch(src, options.watchConfig, gulp.series(name));
         });
 
         return name;
