@@ -43,6 +43,7 @@ function loadStyleSheetsFromConfig(gulp, config, options) {
                 (src) => path.join(srcPrefix, src)
             );
 
+            let watchConfig = options.watchConfig !== undefined ? options.watchConfig : {};
 
             gulp.task(name, done => {
                 const minFilter = filter(['**', '*', '!**/*.min.css', '!*.min.css'], {restore: true});
@@ -61,7 +62,7 @@ function loadStyleSheetsFromConfig(gulp, config, options) {
             });
 
             gulp.task('watch:' + name, () => {
-                gulp.watch(src, options.watchConfig, gulp.series(name));
+                gulp.watch(src, watchConfig, gulp.series(name));
             });
 
             return name;
@@ -80,6 +81,7 @@ function loadScriptsFromConfig(gulp, config, options) {
             (src) => path.join(srcPrefix, src)
         );
 
+        let watchConfig = options.watchConfig !== undefined ? options.watchConfig : {};
 
         gulp.task(name, done => {
             const minFilter = filter(['**', '*', '!**/*.min.js', '!*.min.js'], {restore: true});
@@ -97,7 +99,7 @@ function loadScriptsFromConfig(gulp, config, options) {
         });
 
         gulp.task('watch:' + name, () => {
-            gulp.watch(src, options.watchConfig, gulp.series(name));
+            gulp.watch(src, watchConfig, gulp.series(name));
         });
 
         return name;
