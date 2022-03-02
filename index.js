@@ -7,7 +7,6 @@ const assetsManager = require('./assets-manager');
 
 module.exports = {
     init(gulp, options) {
-
         let assetHandlers = loadAssetHandlers(options.rootDir);
         assetHandlers.forEach((assetHandler) => {
             assetHandler.loadTasks(gulp, options);

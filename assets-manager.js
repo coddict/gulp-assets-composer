@@ -1,5 +1,5 @@
 let path = require('path');
-let sass = require('gulp-sass');
+let sass = require('gulp-sass')(require('sass'));
 let cleanCSS = require('gulp-clean-css');
 let concat = require('gulp-concat');
 let sourcemaps = require('gulp-sourcemaps');
