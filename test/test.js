@@ -20,10 +20,12 @@ function runTest(env) {
 
             let gulpCmd = spawn('gulp', ['--env=' + env], {cwd: tmpTestBasicPath});
 
-            gulpCmd.on('close', () => {
+            gulpCmd.on('close', (statusCode) => {
                 let jsPath = path.join(tmpAssetsPath, 'js');
                 let cssPath = path.join(tmpAssetsPath, 'css');
                 let busterPath = path.join(tmpAssetsPath, 'busters.json');
+
+                assert.equal(statusCode, 0);
 
                 //check if folder is not empty
                 assert.ok(isExists(cssPath));
@@ -64,5 +66,5 @@ function assertExpectedOutput(createdPath, expPath, file) {
     let createdFile = fs.readFileSync(path.join(createdPath, file));
     let expectedFile = fs.readFileSync(path.join(expPath, file));
 
-    assert.equal(createdFile.toString(), expectedFile.toString(), file);
+    assert.equal(createdFile.toString().trim(), expectedFile.toString().trim(), file);
 }
