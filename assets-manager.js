@@ -3,7 +3,7 @@ let sass = require('gulp-sass')(require('sass'));
 let cleanCSS = require('gulp-clean-css');
 let concat = require('gulp-concat');
 let sourcemaps = require('gulp-sourcemaps');
-let uglify = require('gulp-uglify');
+let terser = require('gulp-terser');
 let gutil = require('gulp-util');
 let bust = require('gulp-buster');
 const filter = require('gulp-filter');
@@ -88,7 +88,7 @@ function loadScriptsFromConfig(gulp, config, options) {
             gulp.src(src, {allowEmpty: true})
                 .pipe(minFilter)
                 .pipe(isProd() ? gutil.noop() : sourcemaps.init())
-                .pipe(isProd() ? uglify() : gutil.noop())
+                .pipe(isProd() ? terser() : gutil.noop())
                 .pipe(minFilter.restore)
                 .pipe(concat(script.dest))
                 .pipe(isProd() ? gutil.noop() : sourcemaps.write())
