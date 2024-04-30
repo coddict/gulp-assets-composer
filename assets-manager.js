@@ -7,6 +7,7 @@ let terser = require('gulp-terser');
 let gutil = require('gulp-util');
 let bust = require('gulp-buster');
 const filter = require('gulp-filter');
+const fs = require("fs");
 
 
 module.exports = {
@@ -46,6 +47,10 @@ function loadStyleSheetsFromConfig(gulp, config, options) {
             let watchConfig = options.watchConfig !== undefined ? options.watchConfig : {};
 
             gulp.task(name, done => {
+                if (options.strictMode) {
+                    ensureFilesExist(src);
+                }
+
                 const minFilter = filter(['**', '*', '!**/*.min.css', '!*.min.css'], {restore: true});
                 gulp.src(src, {allowEmpty: true})
                     .pipe(isProd() ? gutil.noop() : sourcemaps.init())
@@ -70,6 +75,24 @@ function loadStyleSheetsFromConfig(gulp, config, options) {
     )
 }
 
+function ensureFilesExist(files)
+{
+    const fs = require('fs');
+    const ansi = require('gulp-cli/lib/shared/ansi');
+
+    let nbMissingFiles = 0;
+    for (const file of files) {
+        if (!fs.existsSync(file)) {
+            ++nbMissingFiles;
+            console.error(ansi.red('file not found: ' + file));
+        }
+    }
+
+    if (nbMissingFiles > 0) {
+        throw new Error(ansi.red(`Could not find ${nbMissingFiles} files, aborting`));
+    }
+}
+
 function loadScriptsFromConfig(gulp, config, options) {
     return Object.keys(config.scripts).map((name) => {
         let script = config.scripts[name];
@@ -84,6 +107,10 @@ function loadScriptsFromConfig(gulp, config, options) {
         let watchConfig = options.watchConfig !== undefined ? options.watchConfig : {};
 
         gulp.task(name, done => {
+            if (options.strictMode) {
+                ensureFilesExist(src);
+            }
+
             const minFilter = filter(['**', '*', '!**/*.min.js', '!*.min.js'], {restore: true});
             gulp.src(src, {allowEmpty: true})
                 .pipe(minFilter)
