@@ -32,6 +32,14 @@ module.exports = {
     }
 };
 
+function getSourceMapsConfig(options) {
+    if (!!options.sourceMapsConfig) {
+        return options.sourceMapsConfig;
+    }
+
+    return isProd() ? null : {destPath: null};
+}
+
 function loadStyleSheetsFromConfig(gulp, config, options) {
     return Object.keys(config.stylesheets).map((name) => {
             let data = config.stylesheets[name];
@@ -51,15 +59,16 @@ function loadStyleSheetsFromConfig(gulp, config, options) {
                     ensureFilesExist(src);
                 }
 
+                const sourceMapsConfig = getSourceMapsConfig(options);
                 const minFilter = filter(['**', '*', '!**/*.min.css', '!*.min.css'], {restore: true});
                 gulp.src(src, {allowEmpty: true})
-                    .pipe(isProd() ? gutil.noop() : sourcemaps.init())
+                    .pipe(sourceMapsConfig ? sourcemaps.init() : gutil.noop())
                     .pipe(minFilter)
                     .pipe(sass(sassConfig).on('error', sass.logError))
                     .pipe(isProd() ? cleanCSS() : gutil.noop())
                     .pipe(minFilter.restore)
                     .pipe(concat(data.dest))
-                    .pipe(isProd() ? gutil.noop() : sourcemaps.write())
+                    .pipe(sourceMapsConfig ? sourcemaps.write(sourceMapsConfig.destPath, sourceMapsConfig) : gutil.noop())
                     .pipe(gulp.dest(buildDir))
                     .pipe(bust(options.busterConfig))
                     .pipe(gulp.dest(options.busterDir))
@@ -111,14 +120,15 @@ function loadScriptsFromConfig(gulp, config, options) {
                 ensureFilesExist(src);
             }
 
+            const sourceMapsConfig = getSourceMapsConfig(options);
             const minFilter = filter(['**', '*', '!**/*.min.js', '!*.min.js'], {restore: true});
             gulp.src(src, {allowEmpty: true})
                 .pipe(minFilter)
-                .pipe(isProd() ? gutil.noop() : sourcemaps.init())
+                .pipe(sourceMapsConfig ? sourcemaps.init() : gutil.noop())
                 .pipe(isProd() ? terser() : gutil.noop())
                 .pipe(minFilter.restore)
                 .pipe(concat(script.dest))
-                .pipe(isProd() ? gutil.noop() : sourcemaps.write())
+                .pipe(sourceMapsConfig ? sourcemaps.write(sourceMapsConfig.destPath, sourceMapsConfig) : gutil.noop())
                 .pipe(gulp.dest(buildDir))
                 .pipe(bust(options.busterConfig))
                 .pipe(gulp.dest(options.busterDir))
