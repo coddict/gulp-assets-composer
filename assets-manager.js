@@ -59,7 +59,7 @@ function loadStyleSheetsFromConfig(gulp, config, options) {
 
                 const sourceMapsConfig = getSourceMapsConfig(options);
                 const minFilter = filter(['**', '*', '!**/*.min.css', '!*.min.css'], {restore: true});
-                gulp.src(src, {allowEmpty: true})
+                gulp.src(src, {allowEmpty: true, base: options.sourcesDir})
                     .pipe(sourceMapsConfig ? sourcemaps.init() : gutil.noop())
                     .pipe(minFilter)
                     .pipe(sass(sassConfig).on('error', sass.logError))
@@ -126,7 +126,7 @@ function loadScriptsFromConfig(gulp, config, options) {
 
             const sourceMapsConfig = getSourceMapsConfig(options);
             const minFilter = filter(['**', '*', '!**/*.min.js', '!*.min.js'], {restore: true});
-            gulp.src(src, {allowEmpty: true})
+            gulp.src(src, {allowEmpty: true, base: options.sourcesDir})
                 .pipe(sourceMapsConfig ? sourcemaps.init() : gutil.noop())
                 .pipe(minFilter)
                 .pipe(isProd() ? terser() : gutil.noop())
