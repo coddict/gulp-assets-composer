@@ -123,8 +123,8 @@ function loadScriptsFromConfig(gulp, config, options) {
             const sourceMapsConfig = getSourceMapsConfig(options);
             const minFilter = filter(['**', '*', '!**/*.min.js', '!*.min.js'], {restore: true});
             gulp.src(src, {allowEmpty: true})
-                .pipe(minFilter)
                 .pipe(sourceMapsConfig ? sourcemaps.init() : gutil.noop())
+                .pipe(minFilter)
                 .pipe(isProd() ? terser() : gutil.noop())
                 .pipe(minFilter.restore)
                 .pipe(concat(script.dest))
