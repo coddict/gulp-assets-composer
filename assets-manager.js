@@ -55,9 +55,7 @@ function loadStyleSheetsFromConfig(gulp, config, options) {
             let watchConfig = options.watchConfig !== undefined ? options.watchConfig : {};
 
             gulp.task(name, done => {
-                if (options.strictMode) {
-                    ensureFilesExist(src);
-                }
+                ensureFilesExist(name, src, options.strictMode);
 
                 const sourceMapsConfig = getSourceMapsConfig(options);
                 const minFilter = filter(['**', '*', '!**/*.min.css', '!*.min.css'], {restore: true});
@@ -84,7 +82,7 @@ function loadStyleSheetsFromConfig(gulp, config, options) {
     )
 }
 
-function ensureFilesExist(files)
+function ensureFilesExist(name, files, triggerErrorOnMissing)
 {
     const fs = require('fs');
     const ansi = require('gulp-cli/lib/shared/ansi');
@@ -92,13 +90,21 @@ function ensureFilesExist(files)
     let nbMissingFiles = 0;
     for (const file of files) {
         if (!fs.existsSync(file)) {
+            if (nbMissingFiles === 0) {
+                console.group(ansi.cyan(name) + ansi.red(' configures invalid file paths:'));
+            }
+
             ++nbMissingFiles;
-            console.error(ansi.red('file not found: ' + file));
+            console.error(ansi.yellow(' - ' + file + ' -> skipped'));
         }
     }
 
     if (nbMissingFiles > 0) {
-        throw new Error(ansi.red(`Could not find ${nbMissingFiles} files, aborting`));
+        console.groupEnd();
+
+        if (triggerErrorOnMissing) {
+            throw new Error(ansi.red(`Could not find ${nbMissingFiles} files, aborting`));
+        }
     }
 }
 
@@ -116,9 +122,7 @@ function loadScriptsFromConfig(gulp, config, options) {
         let watchConfig = options.watchConfig !== undefined ? options.watchConfig : {};
 
         gulp.task(name, done => {
-            if (options.strictMode) {
-                ensureFilesExist(src);
-            }
+            ensureFilesExist(name, src, options.strictMode);
 
             const sourceMapsConfig = getSourceMapsConfig(options);
             const minFilter = filter(['**', '*', '!**/*.min.js', '!*.min.js'], {restore: true});
